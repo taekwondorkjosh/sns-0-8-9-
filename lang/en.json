@@ -809,6 +809,8 @@
 "SETTINGS.5eAutoCollapseCardN": "Collapse Item Cards in Chat",
 "SETTINGS.5eAutoSpellTemplateL": "When a spell is cast, defaults to begin the process to create the corresponding Measured Template if any (requires TRUSTED or higher player role)",
 "SETTINGS.5eAutoSpellTemplateN": "Always place Spell Template",
+"SETTINGS.5eCurWtL": "Carried currency affects character encumbrance following the rules on PHB pg. 143.",
+"SETTINGS.5eCurWtN": "Apply Currency Weight",
 "SETTINGS.5eDiagEuclidean": "Euclidean (7.07 ft. Diagonal)",
 "SETTINGS.5eDiagL": "Configure which diagonal movement rule should be used for games within this system.",
 "SETTINGS.5eDiagN": "Diagonal Movement Rule",
