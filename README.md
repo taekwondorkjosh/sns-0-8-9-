@@ -9,7 +9,9 @@ I have statted up everything in the Core Sourcebook and Galactic Primer, but do 
 
 I am also not uploading the icons, art assets, and additional files for creature/ship token/art management. This is partially to keep file-size down, but mostly because I don't own those art assets and shouldn't be sharing them. 
 
-BETTERROLLSNS IS NOT UPDATED YET
+BetterrollsSnS can be found here: https://github.com/taekwondorkjosh/betterrollsSnS-0.8.9-
+
+KNOWN CONCERNS: does not auto-calculate AC, might not even implement that feature. the migration function is weird, i don't know enough about it to fix it. current fix: stop calling it in sns.js (i put // in front of the function but otherwise left the code in tact)
 
 Important Information:
 
