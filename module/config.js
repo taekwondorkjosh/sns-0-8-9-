@@ -376,6 +376,7 @@ SNS.equipmentTypes = {
   "modification": "SNS.EquipmentModification",
   "cyberware": "SNS.EquipmentCyberware",
   "bioware": "SNS.EquipmentBioware",
+  "mageware": "SNS.EquipmentMageware",
   "computer": "SNS.EquipmentComputer",
   "software": "SNS.EquipmentSoftware",
   "trinket": "SNS.EquipmentTrinket",
