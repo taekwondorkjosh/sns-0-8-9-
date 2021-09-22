@@ -720,6 +720,7 @@ SNS.weaponProperties = {
   "ret": "SNS.WeaponPropertiesRet",
   "scp": "SNS.WeaponPropertiesScp",
   "shk": "SNS.WeaponPropertiesShk",
+  "sic": "SNS.WeaponPropertiesSic",
   "sil": "SNS.WeaponPropertiesSil",
   "slow": "SNS.WeaponPropertiesSlow",
   "spc": "SNS.WeaponPropertiesSpc",
