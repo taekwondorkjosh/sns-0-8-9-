@@ -285,6 +285,7 @@
 "SNS.EquipmentComputer": "Computer",
 "SNS.EquipmentCyberware": "Cyberware",
 "SNS.EquipmentBioware": "Bioware",
+"SNS.EquipmentMageware": "Mageware",
 "SNS.EquipmentHeavy": "Heavy Armor",
 "SNS.EquipmentLight": "Light Armor",
 "SNS.EquipmentMedium": "Medium Armor",
