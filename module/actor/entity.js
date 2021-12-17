@@ -429,10 +429,11 @@ export default class Actor5e extends Actor {
    * @private
    */
   _computeSpellcastingProgression (actorData) {
-    if (actorData.type === 'vehicle' || actorData.type === 'spaceship') return;
+    if (actorData.type === 'vehicle') return;
     const ad = actorData.data;
     const spells = ad.spells;
     const isNPC = actorData.type === 'npc';
+    const isShip = actorData.type === 'spaceship';
 
     // Spellcasting DC
     const spellcastingAbility = ad.abilities[ad.attributes.spellcasting];
@@ -475,7 +476,7 @@ export default class Actor5e extends Actor {
 
     // EXCEPTION: single-classed non-full progression rounds up, rather than down
     const isSingleClass = (progression.total === 1) && ((progression.slot > 0) || ((progression.slot === 0) && (caster.spellcasting.progression === 'psion')));
-    if (!isNPC && isSingleClass && ['psion','half', 'third'].includes(caster.spellcasting.progression) ) {
+    if (!isShip && !isNPC && isSingleClass && ['psion','half', 'third'].includes(caster.spellcasting.progression) ) {
       const denom = caster.spellcasting.progression === 'third' ? 3 : 2;
       progression.slot = Math.ceil(caster.levels / denom);
       if(caster.spellcasting.progression === 'psion') {
@@ -485,6 +486,11 @@ export default class Actor5e extends Actor {
 
     // EXCEPTION: NPC with an explicit spell-caster level
     if (isNPC && actorData.data.details.spellLevel) {
+      progression.slot = actorData.data.details.spellLevel;
+    }
+
+    // EXCEPTION: Ship with an explicit spell-caster level
+    if (isShip && actorData.data.details.spellLevel) {
       progression.slot = actorData.data.details.spellLevel;
     }
 
@@ -1276,28 +1282,32 @@ export default class Actor5e extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Recovers spell slots and pact slots.
+   * Recovers spell slots, battery slots, and pact slots.
    *
    * @param {object} [options]
    * @param {boolean} [options.recoverPact=true]     Recover all expended pact slots.
+   * @param {boolean} [options.recoverBattery=true]  Recover all expended battery slots.
    * @param {boolean} [options.recoverSpells=true]   Recover all expended spell slots.
    * @return {object}                                Updates to the actor.
    * @protected
    */
-  _getRestSpellRecovery({ recoverPact=true, recoverSpells=true }={}) {
+  _getRestSpellRecovery({ recoverPact=true, recoverBattery, recoverSpells=true }={}) {
     let updates = {};
     if ( recoverPact ) {
       const pact = this.data.data.spells.pact;
       updates['data.spells.pact.value'] = pact.override || pact.max;
+    }
+    if ( recoverBattery ) {
+      const battery = this.data.data.spells.battery;
+      updates['data.spells.battery.value'] = battery.override || battery.max;
     }
 
     if ( recoverSpells ) {
       for ( let [k, v] of Object.entries(this.data.data.spells) ) {
         updates[`data.spells.${k}.value`] = Number.isNumeric(v.override) ? v.override : (v.max ?? 0);
       }
-      const battery = this.data.data.spells.battery;
-      updates['data.spells.battery.value'] = battery.override || 0;
     }
+
 
     return updates;
   }

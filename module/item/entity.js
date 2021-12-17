@@ -440,7 +440,13 @@ export default class Item5e extends Item {
     let consumeUsage = !!uses.per;              // Consume limited uses
     let consumeQuantity = uses.autoDestroy;     // Consume quantity of the item in lieu of uses
     let consumeSpellLevel = null;               // Consume a specific category of spell slot
-    if ( requireSpellSlot ) consumeSpellLevel = id.preparation.mode === "pact" ? "pact" : `spell${id.level}`;
+    if ( requireSpellSlot ) {
+	consumeSpellLevel = `spell${id.level}`;
+	if (id.preparation.mode === "pact") 
+		consumeSpellLevel = "pact";
+	if (id.preparation.mode === "battery")
+		consumeSpellLevel = "battery";
+    }
 
     // Display a configuration dialog to customize the usage
     const needsConfiguration = createMeasuredTemplate || consumeRecharge || consumeResource || consumeSpellSlot || consumeUsage;
@@ -457,9 +463,27 @@ export default class Item5e extends Item {
 
       // Handle spell upcasting
       if ( requireSpellSlot ) {
-        consumeSpellLevel = configuration.level === "pact" ? "pact" : `spell${configuration.level}`;
+        
+	if (configuration.level === "pact") 
+		consumeSpellLevel = "pact";
+	else if (configuration.level === "battery")
+		consumeSpellLevel = "battery";
+	else {
+		consumeSpellLevel = `spell${configuration.level}`;
+	}
+
         if ( consumeSpellSlot === false ) consumeSpellLevel = null;
-        const upcastLevel = configuration.level === "pact" ? ad.spells.pact.level : parseInt(configuration.level);
+
+        let upcastLevel1 = parseInt(configuration.level);
+
+	if (configuration.level === "pact") 
+		upcastLevel1 = ad.spells.pact.level;
+
+	if (configuration.level === "battery")
+		upcastLevel1 = ad.spells.battery.level;
+
+	const upcastLevel = upcastLevel1;
+
         if (upcastLevel !== id.level) {
           item = this.clone({"data.level": upcastLevel}, {keepId: true});
           item.data.update({_id: this.id}); // Retain the original ID (needed until 0.8.2+)
@@ -535,7 +559,12 @@ export default class Item5e extends Item {
       const level = this.actor?.data.data.spells[consumeSpellLevel];
       const spells = Number(level?.value ?? 0);
       if ( spells === 0 ) {
-        const label = game.i18n.localize(consumeSpellLevel === "pact" ? "SNS.SpellProgPact" : `SNS.SpellLevel${id.level}`);
+        let labelTemp = game.i18n.localize(`SNS.SpellLevel${id.level}`);
+	if (consumeSpellLevel === "pact")
+		labelTemp = game.i18n.localize("SNS.SpellProgPact");
+	if (consumeSpellLevel === "battery")
+		labelTemp = game.i18n.localize("SNS.SpellProgBattery");
+	const label = labelTemp;
         ui.notifications.warn(game.i18n.format("SNS.SpellCastNoSlots", {name: this.name, level: label}));
         return false;
       }

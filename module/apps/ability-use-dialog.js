@@ -39,7 +39,7 @@ export default class AbilityUseDialog extends Dialog {
     // Prepare dialog form data
     const data = {
       item: item.data,
-      title: game.i18n.format("DND5E.AbilityUseHint", {type: game.i18n.localize(`SNS.ItemType${item.type.capitalize()}`), name: item.name}),
+      title: game.i18n.format("SNS.AbilityUseHint", {type: game.i18n.localize(`SNS.ItemType${item.type.capitalize()}`), name: item.name}),
       note: this._getAbilityUseNote(item.data, uses, recharge),
       consumeSpellSlot: false,
       consumeRecharge: recharges,

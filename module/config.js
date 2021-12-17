@@ -951,7 +951,7 @@ SNS.CR_EXP_LEVELS = [
 
 // Tier XP Levels
 SNS.TIER_EXP_LEVELS = [
-  10, 1100, 3900, 8400, 15000, 25000, 62000
+  10, 1100, 3900, 8400, 15000, 25000, 62000, 93000
 ];
 
 // Character Features Per Class And Level
